@@ -1,0 +1,150 @@
+# =============================================================================
+# diffsurrogate global configuration
+# =============================================================================
+# Single source of truth for all tunables. The Python code never hardcodes any
+# of these values — every section here is validated at startup (see
+# diffsurrogate/config.py) and threaded through to the models, metrics,
+# splitter, and persistence layer.
+#
+# Ordering of sections is fixed: [data] → [transforms] → [models] → [evaluation]
+# → [persistence] → [logging]. Adding a new model means adding it to
+# [models].enabled AND creating a [models.<name>] sub-table below.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# [data] — where the lookup table lives and how to read it
+# -----------------------------------------------------------------------------
+[data]
+  # Path to the lookup table used for training (benchmark mode splits this;
+  # train mode uses it all). Supported extensions: .csv, .h5 / .hdf5, .npy.
+  input_path      = "examples/synthetic_lookup.csv"
+
+  # Path to a CSV of new kinematic points to predict (predict mode only).
+  # Must contain the same columns listed in input_columns.
+  predict_path    = "examples/predict_inputs.csv"
+
+  # Input column names. IMPORTANT: matches the existing Sartre lookup-table
+  # schema. Q2 is already stored as log(Q^2) (column Q2_log_center), W2 and t
+  # are stored as raw physical values in W2_center and t_center respectively.
+  input_columns   = ["Q2_log_center", "W2_center", "t_center"]
+
+  # If true, the Q2 column is assumed to already be on a log scale
+  # (log(Q^2)) — we skip the log step and go straight to z-scoring.
+  # If false, the Q2 column is raw Q^2 and log() is applied inside the scaler.
+  q2_is_prelogged = true
+
+  # Target column — natural log of the squared scattering amplitude.
+  target_column   = "logA"
+
+  # Fraction of data used for training in benchmark mode. Ignored in train/
+  # predict modes (train uses all data; predict loads production artifacts).
+  train_fraction  = 0.80
+
+  # Master random seed. Threaded to numpy, torch, python random, and the
+  # stratified splitter. Changing this alone should give you a different but
+  # reproducible run.
+  random_seed     = 42
+
+# -----------------------------------------------------------------------------
+# [transforms] — physics-informed scalers (see data/transforms.py)
+# -----------------------------------------------------------------------------
+# The paper mandates:
+#   ln Q^2 → z-score   (Q^2 columns)
+#   ln W^2 → z-score   (W^2 columns)
+#   ln(|t| + eps) → z-score   (t columns, eps = t_epsilon_frac * median(|t|))
+#   target (ln A) → robust (median / IQR) scaling
+# -----------------------------------------------------------------------------
+[transforms]
+  q2_transform    = "log_zscore"        # "log_zscore" | "zscore" (for pre-logged)
+  w2_transform    = "log_zscore"
+  t_transform     = "log_stabilized"    # log(|t|+eps) then z-score
+  t_epsilon_frac  = 0.01                # eps = this * median(|t|) on training split only
+  target_scaler   = "robust"            # "robust" (median/IQR) | "standard" (mean/std)
+
+# -----------------------------------------------------------------------------
+# [models] — which surrogates to run and their hyperparameters
+# -----------------------------------------------------------------------------
+# The "enabled" list drives the benchmark/train loops. To skip a model, remove
+# it from enabled; its sub-table below is then ignored.
+# -----------------------------------------------------------------------------
+[models]
+  enabled = ["neural_net", "gaussian_process", "pinn", "fno", "deep_gp", "pce"]
+
+  # ---------- Standard NN / ResNet (PyTorch) ----------
+  [models.neural_net]
+    hidden_layers           = [30, 30, 30]   # paper's baseline 3-30-30-30-1
+    activation              = "tanh"         # "tanh" | "relu" | "gelu" | "swish"
+    use_resnet              = true           # add identity skip connections
+    lr                      = 1e-3
+    weight_decay            = 1e-5
+    max_epochs              = 500
+    batch_size              = 256
+    early_stopping_patience = 20             # epochs without val-loss improvement
+
+  # ---------- Exact / sparse Gaussian Process ----------
+  [models.gaussian_process]
+    kernel            = "matern52_ard"       # "matern52_ard" | "matern32_ard" | "rbf_ard"
+    use_white_noise   = true                 # absorbs Monte Carlo integration noise
+    n_restarts        = 3                    # multi-start hyperparam optimization
+    sparse            = false                # force SVGP regardless of size
+    sparse_threshold  = 10000                # auto-switch to SVGP when N_train > this
+    n_inducing        = 500                  # only used in SVGP mode
+
+  # ---------- Physics-Informed Neural Network ----------
+  [models.pinn]
+    hidden_layers        = [64, 64, 64, 64]
+    activation           = "tanh"             # must be smooth for autograd
+    lr                   = 1e-3
+    max_epochs           = 2000
+    batch_size           = 256
+    n_collocation        = 5000               # points where BK residual is sampled
+    lambda_pde           = 1.0                # weight of BK residual loss
+    lambda_boundary      = 1.0                # weight of 0<=N<=1 unitarity penalty
+    alpha_s              = 0.2                # strong coupling constant in BK eq.
+
+  # ---------- Fourier Neural Operator ----------
+  # Primary mode: FNO-1d along the t-axis, grouped by unique (Q2, W2) slices.
+  # Falls back gracefully to a plain MLP if data is not gridded on t.
+  [models.fno]
+    n_modes     = 16
+    width       = 64
+    n_layers    = 4
+    lr          = 1e-3
+    max_epochs  = 300
+    batch_size  = 32
+
+  # ---------- Deep Gaussian Process (GPyTorch) ----------
+  [models.deep_gp]
+    n_layers    = 2
+    n_inducing  = 100
+    n_samples   = 10                           # MC samples through the DGP stack
+    lr          = 1e-2
+    max_epochs  = 200
+    batch_size  = 256
+
+  # ---------- Polynomial Chaos Expansion (chaospy) ----------
+  [models.pce]
+    order       = 4                            # warn above 5 (Runge risk)
+    regression  = "lars"                       # "lars" | "ols" | "elastic_net"
+
+# -----------------------------------------------------------------------------
+# [evaluation] — metrics and artifacts
+# -----------------------------------------------------------------------------
+[evaluation]
+  metrics     = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
+  output_dir  = "results/"
+  save_plots  = true
+
+# -----------------------------------------------------------------------------
+# [persistence] — where trained models go
+# -----------------------------------------------------------------------------
+[persistence]
+  model_dir    = "saved_models/"
+  save_scalers = true                          # always persist fitted scalers
+
+# -----------------------------------------------------------------------------
+# [logging] — stdlib logging config
+# -----------------------------------------------------------------------------
+[logging]
+  level     = "INFO"          # DEBUG | INFO | WARNING | ERROR
+  log_file  = ""              # empty = stderr only; otherwise a path

@@ -1,0 +1,84 @@
+# Fast-running config for end-to-end smoke testing.
+# Smaller epoch counts, smaller networks, smaller n_collocation.
+# Use this to verify the pipeline works before running the full config.toml.
+
+[data]
+  input_path      = "examples/synthetic_lookup.csv"
+  predict_path    = "examples/predict_inputs.csv"
+  input_columns   = ["Q2_log_center", "W2_center", "t_center"]
+  q2_is_prelogged = true
+  target_column   = "logA"
+  train_fraction  = 0.80
+  random_seed     = 42
+
+[transforms]
+  q2_transform    = "log_zscore"
+  w2_transform    = "log_zscore"
+  t_transform     = "log_stabilized"
+  t_epsilon_frac  = 0.01
+  target_scaler   = "robust"
+
+[models]
+  enabled = ["neural_net", "gaussian_process", "pinn", "fno", "deep_gp", "pce"]
+
+  [models.neural_net]
+    hidden_layers           = [16, 16]
+    activation              = "tanh"
+    use_resnet              = true
+    lr                      = 1e-3
+    weight_decay            = 1e-5
+    max_epochs              = 50
+    batch_size              = 64
+    early_stopping_patience = 10
+
+  [models.gaussian_process]
+    kernel            = "matern52_ard"
+    use_white_noise   = true
+    n_restarts        = 1
+    sparse            = false
+    sparse_threshold  = 10000
+    n_inducing        = 100
+
+  [models.pinn]
+    hidden_layers        = [32, 32]
+    activation           = "tanh"
+    lr                   = 1e-3
+    max_epochs           = 30
+    batch_size           = 64
+    n_collocation        = 200
+    lambda_pde           = 0.1
+    lambda_boundary      = 0.1
+    alpha_s              = 0.2
+
+  [models.fno]
+    n_modes     = 8
+    width       = 32
+    n_layers    = 2
+    lr          = 1e-3
+    max_epochs  = 30
+    batch_size  = 8
+
+  [models.deep_gp]
+    n_layers    = 2
+    n_inducing  = 40
+    n_samples   = 3
+    lr          = 1e-2
+    max_epochs  = 20
+    batch_size  = 128
+
+  [models.pce]
+    order       = 3
+    regression  = "lars"
+
+[evaluation]
+  metrics     = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
+  output_dir  = "results/"
+  save_plots  = true
+
+[persistence]
+  model_dir    = "saved_models/"
+  save_scalers = true
+
+[logging]
+  level     = "INFO"
+  log_file  = ""
