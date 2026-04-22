@@ -1,0 +1,1105 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../installation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Quickstart - diffsurrogate</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quickstart-detailed" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="diffsurrogate" class="md-header__button md-logo" aria-label="diffsurrogate" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            diffsurrogate
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quickstart
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="diffsurrogate" class="md-nav__button md-logo" aria-label="diffsurrogate" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    diffsurrogate
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background &amp; notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-generate-example-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Generate example data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preprocessing-transforms-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Preprocessing &amp; transforms (math)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-benchmark-pipeline-what-happens-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Benchmark pipeline (what happens step-by-step)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-train-production-artifact-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Train (production artifact contents)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-predict-how-uncertainties-are-converted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Predict (how uncertainties are converted)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-reproducibility-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Reproducibility &amp; debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-example-configtoml-snippet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: example config.toml snippet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../persistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background &amp; notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-generate-example-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Generate example data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preprocessing-transforms-math" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Preprocessing &amp; transforms (math)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-benchmark-pipeline-what-happens-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Benchmark pipeline (what happens step-by-step)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-train-production-artifact-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Train (production artifact contents)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-predict-how-uncertainties-are-converted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Predict (how uncertainties are converted)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-reproducibility-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Reproducibility &amp; debugging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-example-configtoml-snippet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: example config.toml snippet
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="quickstart-detailed">Quickstart — detailed<a class="headerlink" href="#quickstart-detailed" title="Permanent link">&para;</a></h1>
+<p>This quickstart reproduces the README flow with extended explanations of the physics notation, the data generation, the preprocessing transforms (with math), benchmarking metrics, training persistence, and prediction post-processing.</p>
+<p>Table of contents
+- Background &amp; notation
+- 1) Generate example data (what it contains)
+- 2) Preprocessing &amp; transforms (math)
+- 3) Benchmark pipeline (what happens step-by-step)
+- 4) Train (production artifact contents)
+- 5) Predict (how uncertainties are converted)
+- 6) Reproducibility &amp; debugging</p>
+<h3 id="background-notation">Background &amp; notation<a class="headerlink" href="#background-notation" title="Permanent link">&para;</a></h3>
+<p>We model the exclusive diffractive scattering amplitude
+$$A(Q^2, W^2, t)$$
+and the repository works with its natural logarithm
+$$y(Q^2,W^2,t) \equiv \ln A(Q^2,W^2,t).$$</p>
+<p>Variables and conventions used across the codebase and examples:
+- $Q^2$ — photon virtuality (GeV$^2$). Some lookup tables store $\ln Q^2$ directly.
+- $W^2$ — center-of-mass energy squared (GeV$^2$).
+- $t$ — Mandelstam variable (momentum transfer, GeV$^2$). Typically negative in scattering kinematics; we use $|t|$ for transforms when appropriate.</p>
+<p>Data rows use three kinematic coordinates plus the target log-amplitude; column names are typically:
+<code>Q2_log_center, W2_center, t_center, logA</code></p>
+<p>Physical notes:
+- Diffractive dips appear at particular $|t|$ values (e.g. $|t|\approx 0.4$ GeV$^2$) and produce strong local structure in $y$.
+- $y$ can vary over orders of magnitude; using the log stabilizes training for many models.</p>
+<h3 id="1-generate-example-data">1) Generate example data<a class="headerlink" href="#1-generate-example-data" title="Permanent link">&para;</a></h3>
+<p>Run the small synthetic example generator included in <code>examples/</code>.</p>
+<pre><code class="language-bash">python examples/generate_example_data.py
+# Produces:
+# - examples/synthetic_lookup.csv    (gridded lookup table, columns as above)
+# - examples/predict_inputs.csv      (new kinematic points for inference)
+</code></pre>
+<p>What the synthetic table contains
+- Gridded samples in $(Q^2,W^2)$ slices across a $t$ grid to exercise the FNO mode.
+- The <code>logA</code> target contains synthetic diffractive-dip structure to exercise robust scalers and stratified splitting.</p>
+<p>Open the CSV to inspect columns and value ranges. A quick Python check:</p>
+<pre><code class="language-python">import pandas as pd
+df = pd.read_csv('examples/synthetic_lookup.csv')
+df.describe()
+</code></pre>
+<h3 id="2-preprocessing-transforms-math">2) Preprocessing &amp; transforms (math)<a class="headerlink" href="#2-preprocessing-transforms-math" title="Permanent link">&para;</a></h3>
+<p>Transforms are defined in the <code>[transforms]</code> table in <code>config.toml</code>. The common transforms are:</p>
+<ul>
+<li>Q2/W2 transforms: <code>log_zscore</code> or <code>zscore</code>.</li>
+<li>
+<p>If <code>log_zscore</code> is selected and the column is raw $Q^2$, apply
+    $$x = \log Q^2$$
+    then z-score
+    $$x' = \frac{x-\mu_x}{\sigma_x}$$
+    where $\mu_x$ and $\sigma_x$ are computed on the training set.</p>
+</li>
+<li>
+<p>$t$ transform: <code>log_stabilized</code> applies a stabilized log followed by z-score:</p>
+</li>
+<li>Choose small offset $\epsilon$ defined by
+     $$\epsilon = t_\text{epsilon_frac} \times \mathrm{median}(|t|_{\text{train}}).$$</li>
+<li>Stable log: $$u = \log\bigl(|t| + \epsilon\bigr).$$</li>
+<li>
+<p>Z-score: $$u' = \frac{u-\mu_u}{\sigma_u}.$$ </p>
+</li>
+<li>
+<p>Target scaler: <code>robust</code> (median/IQR) or <code>standard</code> (mean/std).</p>
+</li>
+<li>For <code>robust</code> scaling, compute median $m$ and interquartile range $\mathrm{IQR}=Q_{3}-Q_{1}$ on training $y$ and transform
+    $$y' = \frac{y-m}{\mathrm{IQR}}.$$ </li>
+<li>For <code>standard</code>, use $y'=(y-\bar y)/\sigma_y$.</li>
+</ul>
+<p>Important: All transforms (means, stds, medians, IQRs, epsilons) are fitted on the training split only and saved with the artifact for inference.</p>
+<h3 id="3-benchmark-pipeline-what-happens-step-by-step">3) Benchmark pipeline (what happens step-by-step)<a class="headerlink" href="#3-benchmark-pipeline-what-happens-step-by-step" title="Permanent link">&para;</a></h3>
+<p>The <code>benchmark</code> command executes the following high-level steps:</p>
+<ol>
+<li>Load lookup table from <code>data.input_path</code>.</li>
+<li>Apply the input transforms to form scaled features $X$ and scaled target $y$.</li>
+<li>Create a stratified train/test split on deciles of $|t|$ to ensure tails and dips appear in both sets. Concretely:</li>
+<li>Compute decile bin index $b = \mathrm{rank_percentile}(|t|) // 10$ and stratify on $b$.</li>
+<li>For each enabled model in <code>models.enabled</code>:
+   a. Build model instance using configuration in <code>[models.&lt;name&gt;]</code>.
+   b. Fit on $(X_{\text{train}}, y_{\text{train}})$.
+   c. Predict on $X_{\text{test}}$ to obtain predicted mean $\hat y$ and (if available) predictive standard deviation $s_{\hat y}$ in log-amplitude space.
+   d. Inverse-transform predictions back to physical units if desired for some metrics (e.g., amplitude-space RMSE). For log-amplitude metrics, operate directly on $y$.</li>
+</ol>
+<p>Metrics computed per model
+- RMSE (in log-amplitude space unless otherwise specified):
+  $$\mathrm{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^N (y_i - \hat y_i)^2}.$$ 
+- Negative Log-Likelihood (NLL) for probabilistic models with Gaussian predictive distribution:
+  $$\mathrm{NLL} = -\sum_{i=1}^N \log \mathcal{N}(y_i \mid \hat y_i, s_{\hat y,i}^2).$$
+  For numerical stability, small floors are applied to $s_{\hat y,i}^2$.
+- Coverage@95 (empirical coverage): fraction of true $y_i$ lying in $[\hat y_i \pm 1.96 s_{\hat y,i}]$.
+- Unitarity violation rate: physics-specific constraint metric computed by checking predictions against domain rules (implementation-specific); the pipeline records fraction of points violating constraints.</p>
+<p>Example benchmark command</p>
+<pre><code class="language-bash">diffsurrogate benchmark --config examples/config_fast.toml
+</code></pre>
+<p>Outputs
+- <code>results/benchmark_results.csv</code> and <code>.json</code> with per-model metrics
+- Per-model directories in <code>saved_models/{model}/benchmark/</code> containing fitted artifacts and diagnostics
+- ASCII leaderboard printed to console sorted by RMSE (or a chosen metric)</p>
+<h3 id="4-train-production-artifact-contents">4) Train (production artifact contents)<a class="headerlink" href="#4-train-production-artifact-contents" title="Permanent link">&para;</a></h3>
+<p>The <code>train</code> command fits each enabled model on the full training dataset (no held-out split) and writes a production bundle. Example command:</p>
+<pre><code class="language-bash">diffsurrogate train --config examples/config_fast.toml
+</code></pre>
+<p>Production artifact layout (example for <code>gaussian_process</code>):</p>
+<pre><code>saved_models/gaussian_process/production/
+├── sklearn_gp.joblib       # model weights / state
+├── gp_mode.json            # metadata such as &quot;exact&quot; vs &quot;svgp&quot;
+├── scalers.joblib          # fitted input + target scalers
+└── metadata.json           # timestamp, n_train, config snapshot
+</code></pre>
+<p>Guidelines
+- Save scalers and metadata to guarantee deterministic inference later.
+- Persist the exact <code>config.toml</code> snapshot under <code>metadata.json</code> so model hyperparameters are tracked.</p>
+<h3 id="5-predict-how-uncertainties-are-converted">5) Predict (how uncertainties are converted)<a class="headerlink" href="#5-predict-how-uncertainties-are-converted" title="Permanent link">&para;</a></h3>
+<p>The <code>predict</code> command loads each requested production artifact, applies the persisted transforms, and writes predictions to CSV files.</p>
+<p>Example:</p>
+<pre><code class="language-bash">diffsurrogate predict --config examples/config_fast.toml --models gaussian_process,pce
+</code></pre>
+<p>Output columns typically include the input kinematics and the following prediction columns:
+- <code>predicted_ln_amplitude</code> — $\hat y = \widehat{\ln A}$
+- <code>predicted_amplitude</code> — $\widehat{A} = \exp(\hat y)$ (point estimate in amplitude space)
+- For UQ-capable models:
+  - <code>std_ln_amplitude</code> — predictive standard deviation $s_{\hat y}$ in log-amplitude space
+  - <code>lower_2sigma</code>, <code>upper_2sigma</code> — amplitude-space intervals computed by exponentiating the log-space bounds:
+    $$\text{lower} = \exp\bigl(\hat y - 2 s_{\hat y}\bigr),\qquad \text{upper} = \exp\bigl(\hat y + 2 s_{\hat y}\bigr).$$</p>
+<p>Notes on converting uncertainties
+- The exact mapping from a Gaussian predictive distribution in log-space to amplitude-space is log-normal. If $Y\sim\mathcal{N}(\mu,\sigma^2)$ then $A=\exp(Y)$ has
+  mean $\mathbb{E}[A]=\exp\left(\mu+\tfrac{1}{2}\sigma^2\right)$ and median $\exp(\mu)$. The code reports the exponentiated central estimate and simple $\pm 2\sigma$ amplitude intervals by default; consult <code>evaluation</code> utilities if you need log-normal-corrected means.</p>
+<h3 id="6-reproducibility-debugging">6) Reproducibility &amp; debugging<a class="headerlink" href="#6-reproducibility-debugging" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Seeds: set <code>data.random_seed</code> in <code>config.toml</code> to control numpy, torch, and random module seeds used by splitter and model code. Exact determinism may vary across backends (GPU nondeterminism, variational sampling in deep GP).</li>
+<li>Missing optional packages: the CLI warns and skips models whose dependencies are unavailable.</li>
+<li>Common issues and fixes:</li>
+<li>"Model training fails due to ill-conditioned covariance": try tightening GP length-scale bounds in the GP config or increase noise/regularization.</li>
+<li>"FNO warns about ungridded t": ensure your lookup table is gridded on <code>t</code> for FNO-1d mode; otherwise FNO falls back to an MLP.</li>
+</ul>
+<h3 id="appendix-example-configtoml-snippet">Appendix: example <code>config.toml</code> snippet<a class="headerlink" href="#appendix-example-configtoml-snippet" title="Permanent link">&para;</a></h3>
+<pre><code class="language-toml">[data]
+input_path = &quot;examples/synthetic_lookup.csv&quot;
+predict_path = &quot;examples/predict_inputs.csv&quot;
+input_columns = [&quot;Q2_log_center&quot;,&quot;W2_center&quot;,&quot;t_center&quot;]
+target_column = &quot;logA&quot;
+random_seed = 42
+
+[transforms]
+q2_transform = &quot;log_zscore&quot;
+w2_transform = &quot;log_zscore&quot;
+t_transform = &quot;log_stabilized&quot;
+t_epsilon_frac = 0.01
+target_scaler = &quot;robust&quot;
+
+[models]
+enabled = [&quot;neural_net&quot;,&quot;gaussian_process&quot;,&quot;pce&quot;]
+</code></pre>
+<p>This completes the quickstart with extended explanations. For more detail on model internals, see <a href="../models/">docs/models.md</a> and for transform math consult <a href="../data/">docs/data.md</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

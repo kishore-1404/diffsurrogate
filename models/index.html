@@ -1,0 +1,1282 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../cli/">
+      
+      
+        <link rel="next" href="../data/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Models - diffsurrogate</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#models-deep-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="diffsurrogate" class="md-header__button md-logo" aria-label="diffsurrogate" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            diffsurrogate
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="diffsurrogate" class="md-nav__button md-logo" aria-label="diffsurrogate" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    diffsurrogate
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#models-deep-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models — deep reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Models — deep reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-interface-and-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common interface and conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural_net-resnet-style-deterministic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        neural_net (ResNet-style deterministic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gaussian_process-exact-sparse-svgp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gaussian_process (exact &amp; sparse SVGP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep_gp-hierarchical-gp-via-variational-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deep_gp (hierarchical GP via variational inference)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinn-physics-informed-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pinn (Physics-Informed Neural Network)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fno-fourier-neural-operator-1d-over-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fno (Fourier Neural Operator — 1d over t)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pce-polynomial-chaos-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pce (Polynomial Chaos Expansion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-saving-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistence, saving &amp; loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperparameter-examples-config-snippets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameter examples (config snippets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-validation-and-performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing, validation and performance tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-and-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references-and-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References and further reading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../persistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Persistence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api_reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#models-deep-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models — deep reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Models — deep reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-interface-and-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common interface and conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neural_net-resnet-style-deterministic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        neural_net (ResNet-style deterministic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gaussian_process-exact-sparse-svgp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gaussian_process (exact &amp; sparse SVGP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep_gp-hierarchical-gp-via-variational-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deep_gp (hierarchical GP via variational inference)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinn-physics-informed-neural-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pinn (Physics-Informed Neural Network)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fno-fourier-neural-operator-1d-over-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fno (Fourier Neural Operator — 1d over t)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pce-polynomial-chaos-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pce (Polynomial Chaos Expansion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-saving-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistence, saving &amp; loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperparameter-examples-config-snippets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameter examples (config snippets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-validation-and-performance-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing, validation and performance tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-and-pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references-and-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References and further reading
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Models</h1>
+
+<h2 id="models-deep-reference">Models — deep reference<a class="headerlink" href="#models-deep-reference" title="Permanent link">&para;</a></h2>
+<p>This document describes the surrogate paradigms implemented in <code>diffsurrogate</code>, their mathematical foundations, typical hyperparameters, expected runtime/behaviour, how uncertainty is produced and interpreted, persistence format, and known pitfalls. All models implement the abstract interface <code>SurrogateModel</code> defined in <a href="diffsurrogate/models/base.py">diffsurrogate/models/base.py</a> with core methods: <code>name()</code>, <code>supports_uq()</code>, <code>fit(X,y)</code>, <code>predict(X)</code>, <code>save(path)</code>, and <code>load(path)</code>.</p>
+<p>Table of contents
+- Common interface and conventions
+- Data shapes and notation
+- Model-specific sections:
+    - <code>neural_net</code>
+    - <code>gaussian_process</code> (exact + sparse)
+    - <code>deep_gp</code>
+    - <code>pinn</code>
+    - <code>fno</code>
+    - <code>pce</code>
+- Persistence and reproducibility
+- Hyperparameter examples (config snippets)
+- Testing, validation and performance tips
+- Limitations and open issues</p>
+<h3 id="common-interface-and-conventions">Common interface and conventions<a class="headerlink" href="#common-interface-and-conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Inputs: features are arranged as numeric arrays of shape $(N, D)$ where columns follow <code>config.data.input_columns</code> order: $(Q^2_col, W^2_col, t_col)$ after transforms.</li>
+<li>Targets: single-column $y=\ln A$ scaled according to <code>transforms.target_scaler</code>.</li>
+<li>All models are expected to accept scaled-space arrays for <code>fit()</code> and <code>predict()</code>. The CLI and pipeline handle transforms automatically — model authors should assume pre-scaled inputs.</li>
+</ul>
+<p>Notation:
+- $X \in \mathbb{R}^{N\times D}$ — feature matrix, $D=3$ here (Q2, W2, t) unless additional engineered features added.
+- $y \in \mathbb{R}^{N}$ — target log-amplitude vector.</p>
+<h3 id="neural_net-resnet-style-deterministic"><code>neural_net</code> (ResNet-style deterministic)<a class="headerlink" href="#neural_net-resnet-style-deterministic" title="Permanent link">&para;</a></h3>
+<p>Overview
+- Implements a feedforward residual MLP/ResNet backbone suitable as a fast deterministic surrogate. Designed as a baseline for speed and capacity; does not provide UQ by default.</p>
+<p>Architecture
+- Typical block: fully-connected layer → activation (ELU/ReLU) → optional batch-norm → residual skip. A small head projects to a scalar output.</p>
+<p>Loss
+- Mean-squared error on scaled $y$ during training:
+    $$\mathcal{L}<em>{\text{data}} = \frac{1}{N}\sum</em>{i=1}^N (y_i - \hat y_i)^2.$$ </p>
+<p>Hyperparameters (config keys)
+- <code>hidden_sizes</code> — list of widths per hidden layer
+- <code>n_blocks</code> — number of residual blocks
+- <code>activation</code> — e.g., <code>elu</code>, <code>relu</code>
+- <code>dropout</code> — dropout probability (optional)
+- <code>lr</code> — learning rate
+- <code>batch_size</code>, <code>epochs</code>, <code>optimizer</code> (adam/sgd)</p>
+<p>Training tips
+- Use <code>robust</code> target scaling for diffractive dips.
+- Monitor validation RMSE and early-stop using patience (5–20 epochs) to avoid overfitting on narrow dips.</p>
+<p>Prediction &amp; UQ
+- Deterministic by default. For approximate UQ, enable Monte-Carlo Dropout at inference (keep dropout active and run multiple forward passes), which approximates Bayesian model averaging:
+    $$\hat y = \frac{1}{M}\sum_{m=1}^M f_{\theta}^{(m)}(x), \quad s_{\hat y}^2 = \frac{1}{M-1}\sum_{m=1}^M (f^{(m)}-\hat y)^2.$$ </p>
+<p>Persistence
+- Saved via PyTorch state dict or exported weights; <code>scalers.joblib</code> saved separately by pipeline.</p>
+<p>When to use
+- When speed is primary and UQ is not required or can be approximated with MC Dropout.</p>
+<h3 id="gaussian_process-exact-sparse-svgp"><code>gaussian_process</code> (exact &amp; sparse SVGP)<a class="headerlink" href="#gaussian_process-exact-sparse-svgp" title="Permanent link">&para;</a></h3>
+<p>Overview
+- Two GP modes are supported: exact Gaussian Process regression (suitable for smaller datasets) and sparse variational GP (SVGP) using inducing points for scalability.</p>
+<p>Model basics (exact GP)
+- Prior: $f(\cdot) \sim \mathcal{GP}(0, k(\cdot,\cdot))$ with kernel $k$. The common choice here is Matérn-5/2 with Automatic Relevance Determination (ARD) lengthscales.
+- Given training $(X,y)$ with Gaussian observation noise $\sigma_n^2$, the predictive distribution at $x_<em>$ is Gaussian with mean and variance:
+    $$\mu_</em> = k_<em>^T (K + \sigma_n^2 I)^{-1} y, \qquad \sigma_</em>^2 = k_{<strong>} - k_<em>^T (K + \sigma_n^2 I)^{-1} k_</em>,$$
+    where $K$ is the $N\times N$ kernel matrix, $k_<em> = k(X,x_</em>), k_{</strong>}=k(x_<em>,x_</em>).$</p>
+<p>Numerical notes
+- Exact GP scales as $\mathcal{O}(N^3)$ in time and $\mathcal{O}(N^2)$ in memory; suitable for $N\lesssim$ a few thousand. For larger datasets use SVGP.</p>
+<p>SVGP (sparse variational GP)
+- Uses $M\ll N$ inducing points $Z$ and variational parameters to approximate the posterior. Training maximizes an evidence lower bound (ELBO) using stochastic optimization.</p>
+<p>Hyperparameters (config keys)
+- <code>kernel</code> — <code>mattern52_ard</code> (default) or alternatives
+- <code>lengthscale_bounds</code> — tightened bounds recommended: e.g. <code>[1e-2, 1e2]</code> because inputs are z-scored
+- <code>noise</code> — observation noise prior/init
+- <code>svgp.num_inducing</code> — number of inducing points for SVGP
+- optimization: <code>lr</code>, <code>maxiter</code>, <code>optimizer</code> (L-BFGS-B used for exact GP by default)</p>
+<p>Uncertainty and NLL
+- GP predictive variance $\sigma_*^2$ is principled and can be used to compute NLL and coverage directly.
+- NLL for Gaussian predictive: see quickstart NLL formula.</p>
+<p>Practical tips
+- Standardize inputs before GP: z-scored inputs reduce pathological lengthscale behavior.
+- Tighten <code>lengthscale_bounds</code> after z-scoring (e.g., $(10^{-2},10^{2})$) to prevent lengthscale collapse to extreme boundaries.</p>
+<p>Persistence
+- Exact GP (scikit-learn style) saved via <code>joblib.dump</code> of the fitted <code>GaussianProcessRegressor</code>.
+- SVGP persists model state (PyTorch state dict or gpytorch equivalent) and a <code>svgp_meta.json</code> describing inducing point locations and training hyperparams.</p>
+<p>When to use
+- When principled UQ is required and dataset sizes permit exact or sparse GP.</p>
+<h3 id="deep_gp-hierarchical-gp-via-variational-inference"><code>deep_gp</code> (hierarchical GP via variational inference)<a class="headerlink" href="#deep_gp-hierarchical-gp-via-variational-inference" title="Permanent link">&para;</a></h3>
+<p>Overview
+- Deep Gaussian Processes stack GPs in a hierarchical fashion, allowing for non-Gaussian function families and higher expressive power than shallow GPs. Implemented with doubly-stochastic variational inference (DSVI) or similar.</p>
+<p>Model sketch
+- A two-layer deep GP with latent $h$:
+    $$h(x) \sim \mathcal{GP}_1(0,k_1),\qquad f(h) \sim \mathcal{GP}_2(0,k_2)$$
+- Variational inference approximates the posterior for layer outputs; predictions are obtained by Monte Carlo sampling through the layers.</p>
+<p>Training objective
+- Maximize ELBO; rely on mini-batching and Monte Carlo samples for gradients.</p>
+<p>Uncertainty
+- Predictive uncertainty combines aleatoric and epistemic components approximated via MC sampling. Because sampling occurs through variational layers, repeated fits may produce stochastic differences; saved state + fixed RNG reduces but may not eliminate variation.</p>
+<p>Hyperparameters
+- <code>n_layers</code>, <code>n_inducing_per_layer</code>, <code>n_samples_predict</code>, <code>lr</code>, <code>epochs</code>.</p>
+<p>Persistence &amp; notes
+- Persist model state dict and <code>metadata.json</code> with <code>n_samples_predict</code> used during eval. The persistence test tolerances in <code>tests/test_models.py</code> are looser for DeepGP due to sampling variability.</p>
+<h3 id="pinn-physics-informed-neural-network"><code>pinn</code> (Physics-Informed Neural Network)<a class="headerlink" href="#pinn-physics-informed-neural-network" title="Permanent link">&para;</a></h3>
+<p>Overview
+- PINNs augment data loss with physics constraints derived from known equations (e.g., BK evolution, unitarity constraints). This encourages physically-plausible extrapolations and reduces overfitting to noisy labels.</p>
+<p>Loss structure
+- Typical composite loss:
+    $$\mathcal{L} = \lambda_{\text{data}} \mathcal{L}<em>{\text{data}} + \lambda</em>{\text{phys}} \mathcal{L}<em>{\text{phys}} + \lambda</em>{\text{reg}} \mathcal{L}<em>{\text{reg}}.$$ 
+- $\mathcal{L}</em>{\text{data}}$ — MSE on observed labels.
+- $\mathcal{L}<em>{\text{phys}}$ — residual of the physical constraint (for example, a PDE residual or unitarity penalty). If $\mathcal{P}[A]=0$ is a physics constraint, then
+    $$\mathcal{L}</em>{\text{phys}} = \frac{1}{N_p} \sum_{j=1}^{N_p} \left|\mathcal{P}[\widehat{A}(x_j)]\right|^2$$
+    evaluated at collocation points $x_j$ (could be the same as training inputs or a separate grid).</p>
+<p>Physics used in this project
+- The PINN here is designed to embed BK evolution and unitarity constraints as soft penalties — refer to <code>diffsurrogate/models/pinn.py</code> for exact terms used.</p>
+<p>Hyperparameters
+- <code>lambda_phys</code>, <code>lambda_reg</code>, <code>n_collocation</code>, <code>phys_equation_config</code> (if available), network architecture similar to <code>neural_net</code>.</p>
+<p>Training notes
+- Balance data and physics loss carefully; scale terms so gradients are comparable. Use learning rate scheduling when training with mixed losses.</p>
+<p>UQ
+- PINNs may be augmented with Bayesian NN techniques or ensembles to obtain uncertainty estimates; not provided out-of-the-box.</p>
+<h3 id="fno-fourier-neural-operator-1d-over-t"><code>fno</code> (Fourier Neural Operator — 1d over t)<a class="headerlink" href="#fno-fourier-neural-operator-1d-over-t" title="Permanent link">&para;</a></h3>
+<p>Overview
+- FNO is applied along the $t$ axis for gridded $(Q^2,W^2)$ slices. It learns integral operators via Fourier-domain multipliers and is powerful on gridded function regression tasks.</p>
+<p>Detection &amp; input requirements
+- To use the FNO branch, the loader must detect that the lookup table is gridded: for each $(Q^2,W^2)$ slice, the set of <code>t_center</code> values must be identical and ordered. If the dataset is not gridded, the pipeline falls back to a ResNet-style MLP.</p>
+<p>Mathematical sketch
+- Represent the function over $t$ for fixed $(Q^2,W^2)$ as $u(t)$ sampled on grid points $t_j, j=1\dots L$. FNO learns an operator $\mathcal{G}$ with spectral layers:
+    $$u_{\ell+1}(t) = \sigma\Bigl(\mathcal{F}^{-1} \bigl( P_{\ell}(k) \cdot \mathcal{F}(u_{\ell})(k) \bigr) + W_{\ell} u_{\ell}(t) \Bigr)$$
+    where $\mathcal{F}$ is discrete Fourier transform across the grid, $P_{\ell}(k)$ are learned multipliers, and $W_{\ell}$ are local linear operators.</p>
+<p>Hyperparameters
+- <code>modes</code> — number of Fourier modes kept
+- <code>width</code> — channel width
+- <code>n_layers</code>, <code>lr</code>, <code>epochs</code>.</p>
+<p>When to use
+- When data is gridded in $t$ and the underlying function is smooth/structured across $t$ (FNO excels at learning global operators).</p>
+<h3 id="pce-polynomial-chaos-expansion"><code>pce</code> (Polynomial Chaos Expansion)<a class="headerlink" href="#pce-polynomial-chaos-expansion" title="Permanent link">&para;</a></h3>
+<p>Overview
+- Polynomial Chaos Expansion (PCE) represents the target as a spectral expansion in orthogonal polynomials (Hermite polynomials for Gaussian-like inputs). PCE is analytical and can provide closed-form UQ via coefficient covariances when built via regression.</p>
+<p>Formulation
+- Represent $y(x)$ as
+    $$y(x) \approx \sum_{\alpha \in \mathcal{A}} c_{\alpha} \Psi_{\alpha}(x)$$
+    where $\Psi_{\alpha}$ are multivariate orthogonal polynomial basis functions (multi-indices $\alpha$) and $c_{\alpha}$ are coefficients estimated by regression (ordinary least squares or regularized variants).</p>
+<p>Hyperparameters
+- <code>max_order</code> — highest polynomial order included
+- <code>basis</code> — Hermite (default) for near-Gaussian inputs
+- <code>reg</code> — optional regularization (ridge)</p>
+<p>UQ
+- PCE yields a coefficient covariance matrix under linear regression assumptions; propagate to predictive variance analytically.</p>
+<p>When to use
+- When the response is well-approximated by a low-order polynomial expansion in the input features and when interpretability and analytic UQ are desired.</p>
+<h3 id="persistence-saving-loading">Persistence, saving &amp; loading<a class="headerlink" href="#persistence-saving-loading" title="Permanent link">&para;</a></h3>
+<p>General guidelines
+- Always save scalers (input + target) along with model weights/state. The pipeline stores these in <code>scalers.joblib</code> so inference uses identical transforms.
+- Save a <code>metadata.json</code> containing:
+    - training timestamp
+    - <code>n_train</code>
+    - a snapshot of the <code>config.toml</code> used
+    - exact hyperparameters</p>
+<p>Model-specific persistence
+- <code>neural_net</code>: PyTorch <code>state_dict()</code> and a small JSON describing architecture
+- <code>gaussian_process</code>: <code>sklearn</code> GP saved via <code>joblib</code> or SVGP state dicts + <code>svgp_meta.json</code>
+- <code>deep_gp</code>: PyTorch/gpytorch state dict + <code>metadata.json</code>
+- <code>pce</code>: coefficients and basis information saved via <code>joblib</code> or <code>numpy.save</code></p>
+<h3 id="hyperparameter-examples-config-snippets">Hyperparameter examples (config snippets)<a class="headerlink" href="#hyperparameter-examples-config-snippets" title="Permanent link">&para;</a></h3>
+<p>Neural net (in <code>config.toml</code>):</p>
+<pre><code class="language-toml">[models.neural_net]
+hidden_sizes = [128,128,64]
+n_blocks = 3
+activation = &quot;elu&quot;
+dropout = 0.1
+lr = 1e-3
+batch_size = 64
+epochs = 200
+</code></pre>
+<p>Gaussian Process (exact) example:</p>
+<pre><code class="language-toml">[models.gaussian_process]
+mode = &quot;exact&quot; # or &quot;svgp&quot;
+kernel = &quot;mattern52_ard&quot;
+lengthscale_bounds = [1e-2, 1e2]
+noise = 1e-6
+optimizer = &quot;L-BFGS-B&quot;
+</code></pre>
+<p>SVGP example:</p>
+<pre><code class="language-toml">[models.gaussian_process]
+mode = &quot;svgp&quot;
+num_inducing = 128
+lr = 1e-2
+epochs = 500
+</code></pre>
+<p>PCE example:</p>
+<pre><code class="language-toml">[models.pce]
+max_order = 4
+basis = &quot;hermite&quot;
+reg = 1e-6
+</code></pre>
+<h3 id="testing-validation-and-performance-tips">Testing, validation and performance tips<a class="headerlink" href="#testing-validation-and-performance-tips" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Unit tests: add smoke tests in <code>tests/test_models.py</code> following the repo pattern. Each model should train a few iterations on synthetic data and verify that <code>save</code>/<code>load</code> round-trips produce similar predictions within tolerance.</li>
+<li>Performance:<ul>
+<li>Use vectorized batching for predictions.</li>
+<li>For GPs and DeepGPs, prefer SVGP for large N to avoid cubic scaling.</li>
+</ul>
+</li>
+</ul>
+<h3 id="limitations-and-pitfalls">Limitations and pitfalls<a class="headerlink" href="#limitations-and-pitfalls" title="Permanent link">&para;</a></h3>
+<ul>
+<li>FNO requires gridded <code>t</code>; feeding irregular $t$ will either fail or degrade performance.</li>
+<li>Exact GP is not feasible for large training sets due to cubic complexity.</li>
+<li>DeepGPs involve stochastic variational training and may produce non-deterministic results; increase <code>n_samples_predict</code> and fix random seeds where reproducibility is required.</li>
+<li>PINNs require careful weighting of physics vs data loss; naive weighting can harm fit.</li>
+</ul>
+<h3 id="references-and-further-reading">References and further reading<a class="headerlink" href="#references-and-further-reading" title="Permanent link">&para;</a></h3>
+<ul>
+<li>R. G. G. L. Gibson et al., "Fourier Neural Operators" — for FNO background.</li>
+<li>Rasmussen &amp; Williams, "Gaussian Processes for Machine Learning" — for GP theory.</li>
+<li>Raissi, Perdikaris, Karniadakis, "Physics-informed neural networks" — for PINN methodology.</li>
+</ul>
+<p>If you want, I can now create separate per-model markdown pages under <code>docs/models/</code> (e.g. <code>docs/models/neural_net.md</code>, <code>docs/models/gaussian_process.md</code>, etc.) with runnable config examples, visual diagnostic examples, and more extended math derivations. Proceed? </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
