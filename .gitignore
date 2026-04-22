@@ -1,0 +1,146 @@
+.agent/
+
+# =========================
+# Python bytecode & caches
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual environments
+# =========================
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# =========================
+# Distribution / packaging
+# =========================
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+*.egg
+MANIFEST
+
+# =========================
+# Installer logs
+# =========================
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# Unit test / coverage
+# =========================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# =========================
+# Type checking / linting
+# =========================
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints
+
+# =========================
+# Logs and databases
+# =========================
+*.log
+*.sqlite3
+*.db
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# IDEs and editors
+# =========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Documentation builds
+# =========================
+docs/_build/
+
+# =========================
+# PyInstaller
+# =========================
+*.manifest
+*.spec
+
+# =========================
+# C extensions
+# =========================
+*.so
+
+# =========================
+# PyCharm
+# =========================
+*.iml
+
+# =========================
+# VS Code settings (optional)
+# =========================
+# Uncomment if you want to ignore workspace settings
+# .vscode/settings.json
+
+# =========================
+# Data / ML (optional)
+# =========================
+data/
+datasets/
+*.h5
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# =========================
+# Temporary files
+# =========================
+*.swp
+*.swo
+*~
