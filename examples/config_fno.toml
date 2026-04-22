@@ -1,0 +1,39 @@
+[data]
+input_path = "examples/synthetic_lookup.csv"
+predict_path = "examples/predict_inputs.csv"
+input_columns = ["Q2_log_center","W2_center","t_center"]
+target_column = "logA"
+train_fraction = 0.8
+random_seed = 42
+
+[transforms]
+q2_transform = "log_zscore"
+w2_transform = "log_zscore"
+t_transform = "log_stabilized"
+t_epsilon_frac = 0.01
+target_scaler = "robust"
+
+[models.fno]
+enabled = true
+modes = 16
+width = 64
+n_layers = 4
+lr = 5e-4
+max_epochs = 300
+batch_size = 16
+
+[models]
+enabled = ["fno"]
+
+[evaluation]
+metrics = ["rmse"]
+output_dir = "results/"
+save_plots = true
+
+[persistence]
+model_dir = "saved_models/"
+save_scalers = true
+
+[logging]
+level = "INFO"
+log_file = ""

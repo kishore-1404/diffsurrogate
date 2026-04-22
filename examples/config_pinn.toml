@@ -1,0 +1,40 @@
+[data]
+input_path = "examples/synthetic_lookup.csv"
+predict_path = "examples/predict_inputs.csv"
+input_columns = ["Q2_log_center","W2_center","t_center"]
+target_column = "logA"
+train_fraction = 0.8
+random_seed = 42
+
+[transforms]
+q2_transform = "log_zscore"
+w2_transform = "log_zscore"
+t_transform = "log_stabilized"
+t_epsilon_frac = 0.01
+target_scaler = "robust"
+
+[models.pinn]
+enabled = true
+lambda_phys = 0.1
+lambda_reg = 1e-6
+n_collocation = 5000
+pretrain_epochs = 50
+finetune_epochs = 150
+lr = 1e-3
+batch_size = 64
+
+[models]
+enabled = ["pinn"]
+
+[evaluation]
+metrics = ["rmse"]
+output_dir = "results/"
+save_plots = true
+
+[persistence]
+model_dir = "saved_models/"
+save_scalers = true
+
+[logging]
+level = "INFO"
+log_file = ""

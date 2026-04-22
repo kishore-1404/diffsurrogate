@@ -1,0 +1,39 @@
+[data]
+input_path = "examples/synthetic_lookup.csv"
+predict_path = "examples/predict_inputs.csv"
+input_columns = ["Q2_log_center","W2_center","t_center"]
+target_column = "logA"
+train_fraction = 0.8
+random_seed = 42
+
+[transforms]
+q2_transform = "log_zscore"
+w2_transform = "log_zscore"
+t_transform = "log_stabilized"
+t_epsilon_frac = 0.01
+target_scaler = "robust"
+
+[models.deep_gp]
+enabled = true
+n_layers = 2
+n_inducing_per_layer = 128
+n_samples_predict = 200
+lr = 1e-3
+max_epochs = 800
+batch_size = 64
+
+[models]
+enabled = ["deep_gp"]
+
+[evaluation]
+metrics = ["rmse","nll"]
+output_dir = "results/"
+save_plots = true
+
+[persistence]
+model_dir = "saved_models/"
+save_scalers = true
+
+[logging]
+level = "INFO"
+log_file = ""
