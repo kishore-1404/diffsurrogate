@@ -79,11 +79,12 @@ Pipeline:
    target robust-scaled)
 3. Stratified split on |t| deciles (so diffractive dips appear in both
    train and test)
-4. Fits each enabled model on the training split, predicts on test
-5. Computes RMSE, NLL, coverage-95, and unitarity violation rate
-6. Saves artifacts to `saved_models/{name}/benchmark/`
-7. Writes `results/benchmark_results.{csv,json}` plus plots
-8. Prints an ASCII leaderboard ranked by RMSE
+4. Creates a timestamped run bundle under `results/benchmark_runs/<run_id>/`
+5. Fits each enabled model on the training split, predicts on test
+6. Computes RMSE, NLL, coverage-95, unitarity violation rate, and residual diagnostics
+7. Saves model artifacts to `saved_models/{name}/benchmark/`
+8. Saves split manifests, per-model prediction tables, JSON/CSV/Markdown reports, plots, and research prompts
+9. Prints an ASCII leaderboard ranked by RMSE
 
 Expected output (approximate, on the synthetic example data):
 
@@ -101,7 +102,30 @@ Expected output (approximate, on the synthetic example data):
 ```
 
 GP dominates on low-noise data (as the paper predicts). NLL / coverage-95
-are NaN for models that don't expose uncertainty.
+are NaN for models that don't expose uncertainty. For research workflows, the
+important output is now the full run bundle, not just the top-level CSV.
+
+A benchmark run bundle contains:
+
+```
+results/benchmark_runs/<run_id>/
+├── metadata/run_manifest.json
+├── splits/train_indices.csv
+├── splits/test_indices.csv
+├── splits/train_split.csv
+├── splits/test_split.csv
+├── predictions/predictions_<model>.csv
+├── reports/benchmark_results.csv
+├── reports/benchmark_results.json
+├── reports/benchmark_summary.json
+├── reports/benchmark_summary.md
+├── reports/research_prompt_pack.md
+└── plots/*.png
+```
+
+Each prediction table preserves dataset indices, truth values, scaled-space
+residuals, physical-space amplitudes, and uncertainty intervals when the model
+supports UQ.
 
 ### 3. Train — produce production artifacts
 
@@ -182,7 +206,21 @@ the top-level `config.toml` for a fully-documented template.
 
 ### `[evaluation]`, `[persistence]`, `[logging]`
 
-See the inline comments in `config.toml`.
+The evaluation section now controls both metrics and reproducibility artifacts:
+
+| Key | Meaning |
+|---|---|
+| `metrics` | Metrics to compute for each enabled surrogate |
+| `output_dir` | Root directory for reports and benchmark run bundles |
+| `save_plots` | Save residual/UQ/t-spectrum plots |
+| `save_predictions` | Save full per-model prediction tables on the benchmark test split |
+| `save_split_data` | Save train/test indices and CSV snapshots of both splits |
+| `save_run_manifest` | Save a JSON manifest with config snapshot, dataset metadata, and method cards |
+| `write_markdown_report` | Save a human-readable benchmark summary in Markdown |
+| `benchmark_runs_dirname` | Subdirectory name used for timestamped benchmark bundles |
+
+`[persistence]` still controls long-lived trained model bundles, while
+`[logging]` controls stderr/file logging.
 
 ---
 

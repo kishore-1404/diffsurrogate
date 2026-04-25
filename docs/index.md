@@ -8,7 +8,7 @@ Welcome to the `diffsurrogate` documentation. This site contains guides for:
 - CLI reference and examples
 - Model descriptions and how to extend the codebase
 - Data loading, transforms, and splitting
-- Evaluation metrics and benchmarking
+- Evaluation metrics, benchmark bundles, and research prompts
 - Persistence and artifact formats
 - Developer guide: testing, adding models, and contributing
 

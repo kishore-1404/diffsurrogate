@@ -71,9 +71,14 @@
     regression  = "lars"
 
 [evaluation]
-  metrics     = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
-  output_dir  = "results/"
-  save_plots  = true
+  metrics               = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
+  output_dir            = "results/"
+  save_plots            = true
+  save_predictions      = true
+  save_split_data       = true
+  save_run_manifest     = true
+  write_markdown_report = true
+  benchmark_runs_dirname = "benchmark_runs"
 
 [persistence]
   model_dir    = "saved_models/"

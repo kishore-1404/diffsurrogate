@@ -131,9 +131,14 @@
 # [evaluation] — metrics and artifacts
 # -----------------------------------------------------------------------------
 [evaluation]
-  metrics     = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
-  output_dir  = "results/"
-  save_plots  = true
+  metrics               = ["rmse", "nll", "coverage_95", "constraint_violation_rate"]
+  output_dir            = "results/"
+  save_plots            = true
+  save_predictions      = true          # write per-model prediction tables inside each benchmark run bundle
+  save_split_data       = true          # persist train/test indices and CSV snapshots for reproducibility
+  save_run_manifest     = true          # persist full config snapshot and method metadata per run
+  write_markdown_report = true          # emit human-readable benchmark_summary.md alongside CSV/JSON
+  benchmark_runs_dirname = "benchmark_runs"
 
 # -----------------------------------------------------------------------------
 # [persistence] — where trained models go

@@ -1,19 +1,31 @@
-# Evaluation & Metrics
+# Evaluation & Benchmarking
 
-Evaluation metrics and plotting live under `diffsurrogate/evaluation/`.
+Evaluation code lives under `diffsurrogate/evaluation/`.
 
-Metrics computed by the benchmark pipeline include:
-- RMSE — root-mean-square error against lookup table
-- NLL — negative log-likelihood (UQ-capable models only)
-- coverage_95 — empirical coverage of the 95% interval (UQ models)
-- unitarity violation rate — proportion of predictions breaching physics constraints
+Core metrics
+- RMSE — point-prediction error in scaled target space
+- MAE — absolute error in scaled target space
+- NLL — Gaussian negative log-likelihood for UQ-capable models
+- `coverage_95` — empirical fraction of test points inside the `±2σ` interval
+- `constraint_violation_rate` — fraction of physical-space predictions outside the admissible range
 
-Benchmark pipeline summary
-1. Train models on the training split
-2. Predict on the test split
-3. Compute metrics and generate plots
-4. Save results in `results/` and per-model artifacts in `saved_models/`
+Research-grade benchmark bundle
+- Every benchmark run now creates `results/benchmark_runs/<run_id>/`.
+- `metadata/run_manifest.json` stores the config snapshot, enabled methods, dataset summary, and split summary.
+- `splits/` stores train/test indices plus CSV snapshots of both splits.
+- `predictions/` stores one CSV per model with ground truth, predictions, residuals, amplitudes, and uncertainty intervals when available.
+- `reports/` stores CSV, JSON, Markdown, and summary JSON reports for the run.
+- `reports/research_prompt_pack.md` provides paper-writing and reviewer-style prompts for interpreting the benchmark scientifically.
+- `plots/` stores residual, UQ, and t-spectrum figures when plotting is enabled.
 
-Plots
-- Leaderboard table (ASCII) printed to console
-- Diagnostic plots saved to `results/plots/`
+Comparison logic
+- Aggregate reports still preserve the configured metric list.
+- The benchmark summary also records residual diagnostics such as median absolute residual, 90th percentile absolute residual, and maximum absolute residual.
+- Markdown summaries include a method comparison table covering probabilistic support, physics-informed structure, grid requirements, and compute profile.
+
+Recommended research workflow
+1. Run `diffsurrogate benchmark --config <config.toml>`.
+2. Treat `benchmark_results.csv` as the quick glance only.
+3. Use the timestamped run bundle for any claim you intend to cite in a report or paper.
+4. Inspect the per-model prediction CSVs before making conclusions about behavior around diffractive dips or large `|t|`.
+5. Re-run across multiple seeds or train fractions before making a strong ranking claim.

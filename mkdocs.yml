@@ -8,6 +8,7 @@ nav:
   - Models: models.md
   - Data: data.md
   - Evaluation: evaluation.md
+  - Research Benchmarking: research_benchmarking.md
   - Persistence: persistence.md
   - API Reference: api_reference.md
   - Development: development.md

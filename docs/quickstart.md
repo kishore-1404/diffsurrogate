@@ -107,7 +107,10 @@ diffsurrogate benchmark --config examples/config_fast.toml
 ```
 
 Outputs
-- `results/benchmark_results.csv` and `.json` with per-model metrics
+- `results/benchmark_results.csv`, `.json`, and `benchmark_summary.{json,md}` as the latest top-level summary
+- `results/benchmark_runs/<run_id>/` containing the full experiment bundle for that exact run
+- `results/benchmark_runs/<run_id>/predictions/predictions_<model>.csv` with truth, predictions, residuals, amplitudes, and UQ bands when available
+- `results/benchmark_runs/<run_id>/splits/` with train/test indices and CSV snapshots
 - Per-model directories in `saved_models/{model}/benchmark/` containing fitted artifacts and diagnostics
 - ASCII leaderboard printed to console sorted by RMSE (or a chosen metric)
 

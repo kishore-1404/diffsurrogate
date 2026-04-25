@@ -134,6 +134,11 @@ class EvaluationConfig:
     metrics: list[str]
     output_dir: str
     save_plots: bool
+    save_predictions: bool = True
+    save_split_data: bool = True
+    save_run_manifest: bool = True
+    write_markdown_report: bool = True
+    benchmark_runs_dirname: str = "benchmark_runs"
 
 
 @dataclass
@@ -257,6 +262,11 @@ def _build_evaluation(d: dict) -> EvaluationConfig:
         metrics=metrics,
         output_dir=d.get("output_dir", "results/"),
         save_plots=bool(d.get("save_plots", True)),
+        save_predictions=bool(d.get("save_predictions", True)),
+        save_split_data=bool(d.get("save_split_data", True)),
+        save_run_manifest=bool(d.get("save_run_manifest", True)),
+        write_markdown_report=bool(d.get("write_markdown_report", True)),
+        benchmark_runs_dirname=str(d.get("benchmark_runs_dirname", "benchmark_runs")),
     )
 
 
