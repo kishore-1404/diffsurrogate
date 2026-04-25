@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../evaluation/">
+        <link rel="prev" href="../research_benchmarking/">
       
       
         <link rel="next" href="../api_reference/">
@@ -417,6 +417,33 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../research_benchmarking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -675,17 +702,22 @@
 
 
 <h1 id="persistence-saved-artifacts">Persistence &amp; Saved Artifacts<a class="headerlink" href="#persistence-saved-artifacts" title="Permanent link">&para;</a></h1>
-<p>Saved models and metadata are organized under <code>saved_models/{model}/{mode}/</code> where <code>{mode}</code> is <code>benchmark</code> or <code>production</code>.</p>
-<p>Typical contents of a production bundle (example for GP):</p>
+<p>Saved model bundles are organized under <code>saved_models/{model}/{mode}/</code> where <code>{mode}</code> is <code>benchmark</code> or <code>production</code>.</p>
+<p>Typical production bundle</p>
 <pre><code>saved_models/gaussian_process/production/
 ├── sklearn_gp.joblib
 ├── gp_mode.json
 ├── scalers.joblib
 └── metadata.json
 </code></pre>
-<p>Guidelines
-- Save scalers and metadata together so inference uses the exact transforms from training.
-- Keep <code>metadata.json</code> with timestamp, n_train, and the config snapshot used to create the artifact.</p>
+<p>Benchmark-time persistence
+- During benchmarking, each successful model is still saved under <code>saved_models/{model}/benchmark/</code>.
+- <code>metadata.json</code> now includes the benchmark <code>run_id</code> in the config snapshot so model artifacts can be traced back to a specific benchmark bundle.
+- The heavy research artifacts live under <code>results/benchmark_runs/&lt;run_id&gt;/</code>, not inside <code>saved_models/</code>.</p>
+<p>Recommended usage
+- Use <code>saved_models/{model}/production/</code> for deployment or downstream inference.
+- Use <code>results/benchmark_runs/&lt;run_id&gt;/</code> for scientific record-keeping, comparisons, and paper figures.
+- Keep <code>metadata.json</code>, <code>scalers.joblib</code>, and the benchmark run manifest together if you need exact reproducibility later.</p>
 
 
 

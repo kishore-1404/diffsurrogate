@@ -555,6 +555,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../research_benchmarking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../persistence/" class="md-nav__link">
         
   
@@ -987,7 +1014,10 @@ df.describe()
 <pre><code class="language-bash">diffsurrogate benchmark --config examples/config_fast.toml
 </code></pre>
 <p>Outputs
-- <code>results/benchmark_results.csv</code> and <code>.json</code> with per-model metrics
+- <code>results/benchmark_results.csv</code>, <code>.json</code>, and <code>benchmark_summary.{json,md}</code> as the latest top-level summary
+- <code>results/benchmark_runs/&lt;run_id&gt;/</code> containing the full experiment bundle for that exact run
+- <code>results/benchmark_runs/&lt;run_id&gt;/predictions/predictions_&lt;model&gt;.csv</code> with truth, predictions, residuals, amplitudes, and UQ bands when available
+- <code>results/benchmark_runs/&lt;run_id&gt;/splits/</code> with train/test indices and CSV snapshots
 - Per-model directories in <code>saved_models/{model}/benchmark/</code> containing fitted artifacts and diagnostics
 - ASCII leaderboard printed to console sorted by RMSE (or a chosen metric)</p>
 <h3 id="4-train-production-artifact-contents">4) Train (production artifact contents)<a class="headerlink" href="#4-train-production-artifact-contents" title="Permanent link">&para;</a></h3>

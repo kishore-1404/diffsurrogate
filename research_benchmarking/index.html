@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../persistence/">
+        <link rel="prev" href="../evaluation/">
       
       
-        <link rel="next" href="../development/">
+        <link rel="next" href="../persistence/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>API Reference - diffsurrogate</title>
+        <title>Research Benchmarking - diffsurrogate</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#api-reference-core-symbols" class="md-skip">
+        <a href="#research-benchmarking-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              API Reference
+              Research Benchmarking
             
           </span>
         </div>
@@ -417,10 +417,19 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../research_benchmarking/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -436,6 +445,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -471,19 +481,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../api_reference/" class="md-nav__link">
         
   
   
@@ -499,7 +500,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -701,17 +701,34 @@
 
 
 
-<h1 id="api-reference-core-symbols">API Reference (Core Symbols)<a class="headerlink" href="#api-reference-core-symbols" title="Permanent link">&para;</a></h1>
-<p>This is a concise reference to the core classes and modules you will interact with.</p>
-<ul>
-<li><code>diffsurrogate.models.base.SurrogateModel</code> — abstract interface all models implement. Key methods: <code>name()</code>, <code>supports_uq()</code>, <code>fit(X,y)</code>, <code>predict(X)</code>, <code>save(path)</code>, <code>load(path)</code>.</li>
-<li><code>diffsurrogate.config</code> — config dataclasses used to parse <code>config.toml</code>.</li>
-<li><code>diffsurrogate.persistence.registry</code> — maps model name strings → (class, config) builders for loading and saving artifacts.</li>
-<li><code>diffsurrogate.data.loader</code> — flexible data loader for CSV/HDF5/NPY inputs.</li>
-<li><code>diffsurrogate.data.transforms</code> — input and target scaling utilities.</li>
-<li><code>diffsurrogate.cli.*</code> — CLI commands wired to the main entrypoints.</li>
-</ul>
-<p>For deeper exploration, open the corresponding module files in the repository and consult inline docstrings.</p>
+<h1 id="research-benchmarking-guide">Research Benchmarking Guide<a class="headerlink" href="#research-benchmarking-guide" title="Permanent link">&para;</a></h1>
+<p>This repository now treats benchmarking as an experiment-tracking workflow, not just a single CSV export.</p>
+<p>What to preserve for every benchmark
+- Exact <code>config.toml</code> snapshot
+- Train/test indices and split CSVs
+- Per-model prediction tables with residuals
+- Aggregate score tables in CSV and JSON
+- Human-readable benchmark summary
+- Method comparison context and research prompts</p>
+<p>What to compare across methods
+- Point accuracy: RMSE and MAE
+- Uncertainty quality: NLL and <code>coverage_95</code> for probabilistic models only
+- Physical plausibility: <code>constraint_violation_rate</code>
+- Compute cost: fit and predict time
+- Tail behavior: performance around large <code>|t|</code> and diffractive dips
+- Artifact reproducibility: whether the run can be reconstructed from saved files alone</p>
+<p>Minimum reviewer-proof checklist
+1. Repeat the benchmark across more than one seed.
+2. Verify that train/test splits preserve the rare <code>|t|</code> regions you care about.
+3. Inspect per-model prediction dumps instead of only leaderboard ranks.
+4. Separate uncertainty-capable and deterministic models when discussing NLL or coverage.
+5. Explain whether observed performance matches the inductive bias of each method.</p>
+<p>Prompt templates
+- Paper narrative: explain which model wins, why, and where the conclusion is fragile.
+- Reviewer critique: identify missing ablations, calibration checks, or repeated-seed studies.
+- Method comparison: contrast GP, Deep GP, PINN, FNO, PCE, and neural nets in terms of bias, cost, and failure modes.
+- Follow-up experiments: propose robustness studies over <code>Q2</code>, <code>W2</code>, <code>|t|</code>, train fraction, and uncertainty calibration.</p>
+<p>The benchmark command also writes a run-specific <code>research_prompt_pack.md</code> into each run bundle so interpretation can stay coupled to the saved artifacts.</p>
 
 
 

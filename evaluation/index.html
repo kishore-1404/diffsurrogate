@@ -12,7 +12,7 @@
         <link rel="prev" href="../data/">
       
       
-        <link rel="next" href="../persistence/">
+        <link rel="next" href="../research_benchmarking/">
       
       
         
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#evaluation-metrics" class="md-skip">
+        <a href="#evaluation-benchmarking" class="md-skip">
           Skip to content
         </a>
       
@@ -430,6 +430,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../research_benchmarking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../persistence/" class="md-nav__link">
         
   
@@ -674,21 +701,32 @@
 
 
 
-<h1 id="evaluation-metrics">Evaluation &amp; Metrics<a class="headerlink" href="#evaluation-metrics" title="Permanent link">&para;</a></h1>
-<p>Evaluation metrics and plotting live under <code>diffsurrogate/evaluation/</code>.</p>
-<p>Metrics computed by the benchmark pipeline include:
-- RMSE — root-mean-square error against lookup table
-- NLL — negative log-likelihood (UQ-capable models only)
-- coverage_95 — empirical coverage of the 95% interval (UQ models)
-- unitarity violation rate — proportion of predictions breaching physics constraints</p>
-<p>Benchmark pipeline summary
-1. Train models on the training split
-2. Predict on the test split
-3. Compute metrics and generate plots
-4. Save results in <code>results/</code> and per-model artifacts in <code>saved_models/</code></p>
-<p>Plots
-- Leaderboard table (ASCII) printed to console
-- Diagnostic plots saved to <code>results/plots/</code></p>
+<h1 id="evaluation-benchmarking">Evaluation &amp; Benchmarking<a class="headerlink" href="#evaluation-benchmarking" title="Permanent link">&para;</a></h1>
+<p>Evaluation code lives under <code>diffsurrogate/evaluation/</code>.</p>
+<p>Core metrics
+- RMSE — point-prediction error in scaled target space
+- MAE — absolute error in scaled target space
+- NLL — Gaussian negative log-likelihood for UQ-capable models
+- <code>coverage_95</code> — empirical fraction of test points inside the <code>±2σ</code> interval
+- <code>constraint_violation_rate</code> — fraction of physical-space predictions outside the admissible range</p>
+<p>Research-grade benchmark bundle
+- Every benchmark run now creates <code>results/benchmark_runs/&lt;run_id&gt;/</code>.
+- <code>metadata/run_manifest.json</code> stores the config snapshot, enabled methods, dataset summary, and split summary.
+- <code>splits/</code> stores train/test indices plus CSV snapshots of both splits.
+- <code>predictions/</code> stores one CSV per model with ground truth, predictions, residuals, amplitudes, and uncertainty intervals when available.
+- <code>reports/</code> stores CSV, JSON, Markdown, and summary JSON reports for the run.
+- <code>reports/research_prompt_pack.md</code> provides paper-writing and reviewer-style prompts for interpreting the benchmark scientifically.
+- <code>plots/</code> stores residual, UQ, and t-spectrum figures when plotting is enabled.</p>
+<p>Comparison logic
+- Aggregate reports still preserve the configured metric list.
+- The benchmark summary also records residual diagnostics such as median absolute residual, 90th percentile absolute residual, and maximum absolute residual.
+- Markdown summaries include a method comparison table covering probabilistic support, physics-informed structure, grid requirements, and compute profile.</p>
+<p>Recommended research workflow
+1. Run <code>diffsurrogate benchmark --config &lt;config.toml&gt;</code>.
+2. Treat <code>benchmark_results.csv</code> as the quick glance only.
+3. Use the timestamped run bundle for any claim you intend to cite in a report or paper.
+4. Inspect the per-model prediction CSVs before making conclusions about behavior around diffractive dips or large <code>|t|</code>.
+5. Re-run across multiple seeds or train fractions before making a strong ranking claim.</p>
 
 
 

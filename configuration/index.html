@@ -430,6 +430,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../research_benchmarking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../persistence/" class="md-nav__link">
         
   
@@ -675,23 +702,30 @@
 
 
 <h1 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h1>
-<p>All runtime behaviour is driven by <code>config.toml</code> at the repository root. Use the examples config files in <code>examples/</code> as starting points.</p>
-<p>Top-level sections you will see in templates:</p>
-<ul>
-<li><code>[data]</code> — input paths, column names, splitting, seeds</li>
-<li><code>[transforms]</code> — input and target scalers and t-stabilization settings</li>
-<li><code>[models]</code> — <code>enabled</code> list and per-model hyperparameters</li>
-<li><code>[evaluation]</code> — metric choices, plotting options</li>
-<li><code>[persistence]</code> — output directories and naming</li>
-</ul>
-<p>Important keys</p>
-<ul>
-<li><code>data.input_path</code> — path to lookup table (CSV/HDF5/.npy)</li>
-<li><code>data.predict_path</code> — path with new points for prediction</li>
-<li><code>transforms.target_scaler</code> — <code>robust</code> recommended for diffractive dips</li>
-<li><code>models.enabled</code> — list of model names to run</li>
-</ul>
-<p>When adding a new model, add a <code>[models.new_model]</code> table and a name in <code>enabled</code>.</p>
+<p>All runtime behaviour is driven by <code>config.toml</code> at the repository root. Use the example config files in <code>examples/</code> as starting points.</p>
+<p>Top-level sections
+- <code>[data]</code> — input paths, column names, splitting, seeds
+- <code>[transforms]</code> — input and target scalers and t-stabilization settings
+- <code>[models]</code> — <code>enabled</code> list and per-model hyperparameters
+- <code>[evaluation]</code> — metrics, plots, benchmark artifact capture, and reporting
+- <code>[persistence]</code> — model bundle directories
+- <code>[logging]</code> — stderr/file logging</p>
+<p>Important keys
+- <code>data.input_path</code> — path to lookup table (CSV/HDF5/.npy)
+- <code>data.predict_path</code> — path with new points for prediction
+- <code>data.train_fraction</code> — held-out fraction for benchmark mode
+- <code>transforms.target_scaler</code> — <code>robust</code> is recommended for diffractive dips
+- <code>models.enabled</code> — list of model names to run</p>
+<p>Evaluation-specific keys
+- <code>evaluation.metrics</code> — metrics to compute for each model
+- <code>evaluation.output_dir</code> — root location for summary outputs and benchmark run bundles
+- <code>evaluation.save_plots</code> — save residual/UQ/t-spectrum figures
+- <code>evaluation.save_predictions</code> — save full per-model prediction CSVs
+- <code>evaluation.save_split_data</code> — save train/test indices and split CSVs
+- <code>evaluation.save_run_manifest</code> — save run metadata and config snapshot JSON
+- <code>evaluation.write_markdown_report</code> — emit a readable Markdown benchmark summary
+- <code>evaluation.benchmark_runs_dirname</code> — subdirectory used for timestamped runs</p>
+<p>When adding a new model, add a <code>[models.new_model]</code> table and include the name in <code>models.enabled</code>.</p>
 
 
 
